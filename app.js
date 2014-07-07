@@ -6,10 +6,18 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var exphbr   = require('express3-handlebars'); // " for templating express3-handlebars"
 
-var routes = require('./routes/index');
-var users = require('./routes/users');
+// pass http module for socket
 
 var app = express();
+
+var server = require('http').createServer(app);
+
+//use the main.js as a holder for other routes
+var routes = require('./routes/main')(app);
+var socketio = require('./routes/socket');
+
+//use the socket by passing the server
+socketio.initialize(server);
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -23,9 +31,6 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded());
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-
-app.use('/', routes);
-app.use('/users', users);
 
 /// catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -60,3 +65,5 @@ app.use(function(err, req, res, next) {
 
 
 module.exports = app;
+// use "node app.js" to run
+server.listen(8000);
