@@ -25,7 +25,9 @@ exports.initialize = function(server){
 	       		callback(true);
 	       		socket.username = data;
 	       		users[socket.username] = {'id' : socket.id};
-                io.sockets.emit('showUsers', users);
+
+                var usersLists = {users:users, id: socket.id};
+                io.sockets.emit('showUsers', usersLists);
 	       	}
 
        });

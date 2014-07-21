@@ -18,12 +18,17 @@ $(document).ready(function(){
 
 
 	socket.on('showUsers', function(data){
-		$('.users-list').html("");
-		$.each(data, function(key, value){
-		console.log(key+" : "+value);
-		// $('.users-list').html()
-		$('.users-list').append("<li><button>"+key+"</button></li>");
 
+		$('.users-list').html("");
+		$.each(data['users'], function(key, value){
+		console.log(key+" : "+value['id']);
+		// $('.users-list').html()
+		if(value['id'] != data['id']){
+			$('.users-list').append("<li><button>"+key+"</button></li>");
+			}
+		else{
+			console.log(data['id']);
+		}
 		});
 	});
 
