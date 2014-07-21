@@ -16,9 +16,14 @@ $(document).ready(function(){
 		});	
 	});
 
+
 	socket.on('showUsers', function(data){
+		$('.users-list').html("");
 		$.each(data, function(key, value){
-			console.log(key+" : "+value);
+		console.log(key+" : "+value);
+		// $('.users-list').html()
+		$('.users-list').append("<li><button>"+key+"</button></li>");
+
 		});
 	});
 
