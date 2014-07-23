@@ -6,7 +6,7 @@ exports.initialize = function(server){
 
     io.sockets.on('connection', function(socket){
        socket.on('newUser', function(data, callback){
-
+       	
 	       	if(data in users){	
 	       		callback(false);
 
@@ -23,6 +23,7 @@ exports.initialize = function(server){
 
 	       	}else{
 	       		callback(true);
+	       		console.log(socket.id);
 	       		socket.username = data;
 	       		users[socket.username] = {'id' : socket.id};
 
