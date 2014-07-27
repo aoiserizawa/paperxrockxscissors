@@ -32,5 +32,14 @@ exports.initialize = function(server){
 	       	}
 
        });
+
+       var connectTo = function (user){
+        console.log(user);
+        io.sockets.to(user['opponentId']).emit('attemptConnection', {username: user['opponentName']});
+       };
+
+       socket.on('connectToUserX', function(data){
+        connectTo(data);
+       });
     });
 };

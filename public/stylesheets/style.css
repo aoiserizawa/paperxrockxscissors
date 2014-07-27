@@ -25,3 +25,8 @@ a {
 .user-join-wrap { width: auto; height: 100px !important; background-color: #5677fc; padding-top: 30px;}
 
 .user-activity-wrap { width: auto; background-color: #f0f4c3; height: 80%; }
+
+.users-list { margin-top: 10px; }
+
+.users-list li{ list-style: none; margin-top: 5px; }
+
