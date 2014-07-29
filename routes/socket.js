@@ -2,7 +2,7 @@ var io = require('socket.io');
 
 exports.initialize = function(server){
     io = io.listen(server);
-    var users = {}
+    var users = {};
 
     io.sockets.on('connection', function(socket){
       var showAllUsers = function(){
