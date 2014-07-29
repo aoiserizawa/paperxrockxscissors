@@ -6,7 +6,6 @@ exports.initialize = function(server){
 
     io.sockets.on('connection', function(socket){
        socket.on('newUser', function(data, callback){
-       	
 	       	if(data in users){	
 	       		callback(false);
 
@@ -23,14 +22,12 @@ exports.initialize = function(server){
 
 	       	}else{
 	       		callback(true);
-	       		console.log(socket.id);
 	       		socket.username = data;
 	       		users[socket.username] = {'id' : socket.id};
-
-                var usersLists = {users:users, id: socket.id};
-                io.sockets.emit('showUsers', usersLists);
+                //var usersLists = {users:users, id: socket.id};
+                io.sockets.emit('showUsers', users);
+                console.log(users);
 	       	}
-
        });
 
        var connectTo = function (user){
@@ -41,5 +38,15 @@ exports.initialize = function(server){
        socket.on('connectToUserX', function(data){
         connectTo(data);
        });
+
+       socket.on('disconnect', function(data){
+            if(!socket.username) return;
+              console.log(socket.username+": disconnect");
+              delete users[socket.username];
+              // OLD
+              //usernames.splice(usernames.indexOf(socket.username), 1);
+              io.sockets.emit('showUsers', users);
+        });
+
     });
 };

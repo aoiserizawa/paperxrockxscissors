@@ -21,18 +21,15 @@ $(document).ready(function(){
 	// show all current users
 	socket.on('showUsers', function(data){
 		// gets the client socket id
-		var ids = socket.io.engine.id;
-		console.log(ids);
+		var ids = socket.io.engine.id;	
 		$('.users-list').html("");
-		$.each(data['users'], function(key, value){
-
-		if(value['id'] != ids ){
-			console.log(data['id']);
-			$('.users-list').append('<li><button class="btn btn-success connect-to-btn" data-id='+value['id']+' > Connect To : '+key+'</button></li>');
-		}
-		else{
-			console.log(data['id']);
-		}
+		$.each(data, function(key, value){
+		console.log("key: "+key+" value : "+value);
+			// avoid showing a button to connect to your self
+			if(value['id'] != ids ){
+				console.log(data['id']);
+				$('.users-list').append('<li><button class="btn btn-success connect-to-btn" data-id='+value['id']+' > Connect To : '+key+'</button></li>');
+			}
 		});
 	});
 
@@ -46,4 +43,6 @@ $(document).ready(function(){
 	socket.on('attemptConnection', function(data){
 		alert(data['username']+" wants to connect");
 	});
+
+	$('#myModal').modal('show');
 });
