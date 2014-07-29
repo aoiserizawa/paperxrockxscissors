@@ -5,6 +5,12 @@ exports.initialize = function(server){
     var users = {}
 
     io.sockets.on('connection', function(socket){
+      var showAllUsers = function(){
+        io.sockets.emit('showUsers', users);
+      };
+
+      showAllUsers();
+
        socket.on('newUser', function(data, callback){
 	       	if(data in users){	
 	       		callback(false);
@@ -24,8 +30,7 @@ exports.initialize = function(server){
 	       		callback(true);
 	       		socket.username = data;
 	       		users[socket.username] = {'id' : socket.id};
-                //var usersLists = {users:users, id: socket.id};
-                io.sockets.emit('showUsers', users);
+                showAllUsers();
                 console.log(users);
 	       	}
        });
@@ -45,7 +50,7 @@ exports.initialize = function(server){
               delete users[socket.username];
               // OLD
               //usernames.splice(usernames.indexOf(socket.username), 1);
-              io.sockets.emit('showUsers', users);
+              showAllUsers();
         });
 
     });
